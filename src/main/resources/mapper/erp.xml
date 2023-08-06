@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="erp.mapper.ErpMapper">
+
+	<insert id="insertInfo" parameterType="erp.dto.ErpDto">
+		insert into info 
+		(em_num, em_rank,
+		name, phone_num, email)
+		values
+		(#{emNum},#{emRank},#{name},#{phoneNum},#{email})
+	</insert>
+
+	<select id="erpList" resultType="erp.dto.ErpDto">
+		select info_idx, em_num, em_rank, name,
+		phone_num, email from info
+		order by name
+	</select>
+
+	<delete id="delInfo" parameterType="Integer">
+		DELETE
+		FROM info
+		WHERE em_num = #{emNum}
+	</delete>
+	
+	<update id="updateInfo" parameterType="erp.dto.ErpDto">
+		update info
+		set 
+		em_num = #{emNum},
+		em_rank = #{emRank},
+		name = #{name},
+		phone_num = #{phoneNum},
+		email = #{email}
+		where info_idx = #{infoIdx}
+	</update>
+	
+	<select id="getPerson" parameterType="Integer" resultType="erp.dto.ErpDto">
+		select info_idx, em_num, em_rank, name,
+		phone_num, email from info
+		where info_idx = #{infoIdx}
+	</select>
+	
+	<select id="checkDupl" parameterType="erp.dto.ErpDto" resultType="Integer">
+		select COUNT(*) from info
+		where em_num = #{emNum}
+	</select>
+
+</mapper>
